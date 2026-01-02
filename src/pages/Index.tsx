@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import Icon from '@/components/ui/icon';
 import { Badge } from '@/components/ui/badge';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 
 export default function Index() {
   const [formData, setFormData] = useState({
@@ -13,6 +14,7 @@ export default function Index() {
     message: ''
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   
   const [calculator, setCalculator] = useState({
     budget: '',
@@ -163,6 +165,55 @@ export default function Index() {
               <Button>Связаться</Button>
             </a>
           </div>
+          <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon" className="md:hidden">
+                <Icon name="Menu" size={24} />
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="right" className="w-[280px]">
+              <div className="flex flex-col gap-6 mt-8">
+                <a 
+                  href="#about" 
+                  className="text-lg hover:text-primary transition-colors"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Обо мне
+                </a>
+                <a 
+                  href="#cases" 
+                  className="text-lg hover:text-primary transition-colors"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Кейсы
+                </a>
+                <a 
+                  href="#services" 
+                  className="text-lg hover:text-primary transition-colors"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Услуги
+                </a>
+                <a 
+                  href="#calculator" 
+                  className="text-lg hover:text-primary transition-colors"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Калькулятор
+                </a>
+                <a 
+                  href="#testimonials" 
+                  className="text-lg hover:text-primary transition-colors"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Отзывы
+                </a>
+                <Button asChild className="mt-4">
+                  <a href="#contact" onClick={() => setMobileMenuOpen(false)}>Связаться</a>
+                </Button>
+              </div>
+            </SheetContent>
+          </Sheet>
         </nav>
       </header>
 
