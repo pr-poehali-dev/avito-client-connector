@@ -13,6 +13,40 @@ export default function Index() {
     message: ''
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
+  
+  const [calculator, setCalculator] = useState({
+    budget: '',
+    leads: '',
+    conversion: '',
+    averageCheck: ''
+  });
+  const [calcResults, setCalcResults] = useState<{
+    costPerLead: number;
+    clients: number;
+    revenue: number;
+    roi: number;
+  } | null>(null);
+
+  const calculateROI = () => {
+    const budget = parseFloat(calculator.budget) || 0;
+    const leads = parseFloat(calculator.leads) || 0;
+    const conversion = parseFloat(calculator.conversion) || 0;
+    const averageCheck = parseFloat(calculator.averageCheck) || 0;
+
+    if (budget && leads && conversion && averageCheck) {
+      const costPerLead = budget / leads;
+      const clients = (leads * conversion) / 100;
+      const revenue = clients * averageCheck;
+      const roi = ((revenue - budget) / budget) * 100;
+
+      setCalcResults({
+        costPerLead: Math.round(costPerLead),
+        clients: Math.round(clients * 10) / 10,
+        revenue: Math.round(revenue),
+        roi: Math.round(roi)
+      });
+    }
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -123,6 +157,7 @@ export default function Index() {
             <a href="#about" className="hover:text-primary transition-colors">Обо мне</a>
             <a href="#cases" className="hover:text-primary transition-colors">Кейсы</a>
             <a href="#services" className="hover:text-primary transition-colors">Услуги</a>
+            <a href="#calculator" className="hover:text-primary transition-colors">Калькулятор</a>
             <a href="#testimonials" className="hover:text-primary transition-colors">Отзывы</a>
             <a href="#contact">
               <Button>Связаться</Button>
@@ -276,6 +311,141 @@ export default function Index() {
         </div>
       </section>
 
+      <section id="calculator" className="py-20 bg-muted/30">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">Калькулятор ROI</h2>
+              <p className="text-lg text-muted-foreground">Рассчитайте окупаемость рекламы на Авито</p>
+            </div>
+            
+            <div className="grid md:grid-cols-2 gap-8">
+              <Card className="p-6">
+                <CardHeader className="px-0 pt-0">
+                  <CardTitle>Введите данные</CardTitle>
+                  <CardDescription>Укажите параметры вашей рекламной кампании</CardDescription>
+                </CardHeader>
+                <CardContent className="px-0 pb-0">
+                  <div className="space-y-4">
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Рекламный бюджет (₽)</label>
+                      <Input
+                        type="number"
+                        placeholder="30000"
+                        value={calculator.budget}
+                        onChange={(e) => {
+                          setCalculator({ ...calculator, budget: e.target.value });
+                          setCalcResults(null);
+                        }}
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Ожидаемое кол-во заявок</label>
+                      <Input
+                        type="number"
+                        placeholder="100"
+                        value={calculator.leads}
+                        onChange={(e) => {
+                          setCalculator({ ...calculator, leads: e.target.value });
+                          setCalcResults(null);
+                        }}
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Конверсия в продажу (%)</label>
+                      <Input
+                        type="number"
+                        placeholder="25"
+                        value={calculator.conversion}
+                        onChange={(e) => {
+                          setCalculator({ ...calculator, conversion: e.target.value });
+                          setCalcResults(null);
+                        }}
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Средний чек (₽)</label>
+                      <Input
+                        type="number"
+                        placeholder="5000"
+                        value={calculator.averageCheck}
+                        onChange={(e) => {
+                          setCalculator({ ...calculator, averageCheck: e.target.value });
+                          setCalcResults(null);
+                        }}
+                      />
+                    </div>
+                    <Button onClick={calculateROI} className="w-full" size="lg">
+                      <Icon name="Calculator" className="mr-2" size={20} />
+                      Рассчитать
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="p-6 bg-gradient-to-br from-primary/5 to-accent/5">
+                <CardHeader className="px-0 pt-0">
+                  <CardTitle>Результаты расчёта</CardTitle>
+                  <CardDescription>Прогноз эффективности кампании</CardDescription>
+                </CardHeader>
+                <CardContent className="px-0 pb-0">
+                  {calcResults ? (
+                    <div className="space-y-6">
+                      <div className="p-4 bg-white rounded-lg border">
+                        <div className="flex items-center justify-between mb-1">
+                          <span className="text-sm text-muted-foreground">Стоимость заявки</span>
+                          <Icon name="TrendingDown" className="text-primary" size={18} />
+                        </div>
+                        <div className="text-3xl font-bold text-primary">{calcResults.costPerLead}₽</div>
+                      </div>
+                      
+                      <div className="p-4 bg-white rounded-lg border">
+                        <div className="flex items-center justify-between mb-1">
+                          <span className="text-sm text-muted-foreground">Клиентов</span>
+                          <Icon name="Users" className="text-primary" size={18} />
+                        </div>
+                        <div className="text-3xl font-bold">{calcResults.clients}</div>
+                      </div>
+                      
+                      <div className="p-4 bg-white rounded-lg border">
+                        <div className="flex items-center justify-between mb-1">
+                          <span className="text-sm text-muted-foreground">Выручка</span>
+                          <Icon name="DollarSign" className="text-primary" size={18} />
+                        </div>
+                        <div className="text-3xl font-bold text-green-600">{calcResults.revenue.toLocaleString()}₽</div>
+                      </div>
+                      
+                      <div className="p-4 bg-gradient-to-r from-accent to-primary text-white rounded-lg">
+                        <div className="flex items-center justify-between mb-1">
+                          <span className="text-sm text-white/90">ROI (окупаемость)</span>
+                          <Icon name="TrendingUp" className="text-white" size={18} />
+                        </div>
+                        <div className="text-4xl font-bold">{calcResults.roi > 0 ? '+' : ''}{calcResults.roi}%</div>
+                        <div className="text-xs text-white/80 mt-1">
+                          {calcResults.roi > 100 ? 'Отличная окупаемость!' : calcResults.roi > 0 ? 'Кампания окупается' : 'Требуется оптимизация'}
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="flex flex-col items-center justify-center h-full py-12 text-center">
+                      <Icon name="Calculator" className="text-muted-foreground/30 mb-4" size={64} />
+                      <p className="text-muted-foreground">Заполните поля слева и нажмите<br />"Рассчитать" для получения результатов</p>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            </div>
+            
+            <div className="mt-8 text-center">
+              <p className="text-sm text-muted-foreground mb-4">Хотите реальных результатов как в расчёте?</p>
+              <Button size="lg" asChild>
+                <a href="#contact">Получить консультацию</a>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section id="testimonials" className="py-20">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
@@ -380,6 +550,7 @@ export default function Index() {
                 <a href="#about" className="block text-white/70 hover:text-white transition-colors">Обо мне</a>
                 <a href="#cases" className="block text-white/70 hover:text-white transition-colors">Кейсы</a>
                 <a href="#services" className="block text-white/70 hover:text-white transition-colors">Услуги</a>
+                <a href="#calculator" className="block text-white/70 hover:text-white transition-colors">Калькулятор</a>
                 <a href="#testimonials" className="block text-white/70 hover:text-white transition-colors">Отзывы</a>
               </div>
             </div>
