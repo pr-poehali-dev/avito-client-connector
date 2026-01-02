@@ -219,29 +219,43 @@ export default function Index() {
 
       <section className="py-20 md:py-32 bg-gradient-to-br from-secondary via-secondary/95 to-primary/20">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center text-white">
-            <Badge className="mb-6 bg-accent text-white border-0 text-sm px-4 py-1">
-              Более 5 лет в авито-маркетинге
-            </Badge>
-            <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
-              Настройка рекламы на Авито<br />с гарантией результата
-            </h1>
-            <p className="text-xl md:text-2xl mb-8 text-white/90">
-              Помогаю бизнесу находить клиентов через Авито: товары, услуги, вакансии.<br />
-              Полное ведение под ключ.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-              <Button size="lg" className="bg-accent hover:bg-accent/90" asChild>
-                <a href="#contact">Получить консультацию</a>
-              </Button>
-              <Button size="lg" variant="outline" className="bg-white/10 border-white text-white hover:bg-white/20" asChild>
-                <a href="#cases">Смотреть кейсы</a>
-              </Button>
+          <div className="max-w-6xl mx-auto">
+            <div className="grid md:grid-cols-2 gap-12 items-center">
+              <div className="text-white order-2 md:order-1">
+                <Badge className="mb-6 bg-accent text-white border-0 text-sm px-4 py-1">
+                  Более 5 лет в авито-маркетинге
+                </Badge>
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+                  Настройка рекламы на Авито<br />с гарантией результата
+                </h1>
+                <p className="text-lg md:text-xl mb-8 text-white/90">
+                  Помогаю бизнесу находить клиентов через Авито: товары, услуги, вакансии. Полное ведение под ключ.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 mb-8">
+                  <Button size="lg" className="bg-accent hover:bg-accent/90" asChild>
+                    <a href="#contact">Получить консультацию</a>
+                  </Button>
+                  <Button size="lg" variant="outline" className="bg-white/10 border-white text-white hover:bg-white/20" asChild>
+                    <a href="#cases">Смотреть кейсы</a>
+                  </Button>
+                </div>
+              </div>
+              
+              <div className="order-1 md:order-2 flex justify-center">
+                <div className="relative">
+                  <div className="absolute inset-0 bg-accent/20 rounded-2xl blur-3xl"></div>
+                  <img 
+                    src="https://cdn.poehali.dev/files/ef7a1f65-c154-4029-9eaa-dccb642387be.png" 
+                    alt="Профессиональный авитолог"
+                    className="relative rounded-2xl shadow-2xl w-full max-w-md object-cover"
+                  />
+                </div>
+              </div>
             </div>
             
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16">
               {stats.map((stat, index) => (
-                <div key={index} className="animate-fade-in">
+                <div key={index} className="animate-fade-in text-center text-white">
                   <div className="text-4xl md:text-5xl font-bold mb-2 text-accent">{stat.value}</div>
                   <div className="text-sm md:text-base text-white/80">{stat.label}</div>
                 </div>
@@ -253,17 +267,32 @@ export default function Index() {
 
       <section id="about" className="py-20 bg-muted/30">
         <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">Обо мне</h2>
-            <p className="text-lg text-muted-foreground mb-6">
-              Я авитолог с 5-летним опытом работы. Специализируюсь на комплексном продвижении бизнеса на Авито: 
-              от настройки рекламных кампаний до полного ведения аккаунта.
-            </p>
-            <p className="text-lg text-muted-foreground mb-8">
-              Работаю с товарами, услугами и вакансиями. За это время помог более 200 компаниям увеличить поток клиентов 
-              и оптимизировать рекламный бюджет. Мой подход — это анализ, тестирование и масштабирование того, что работает.
-            </p>
-            <div className="grid md:grid-cols-3 gap-6">
+          <div className="max-w-5xl mx-auto">
+            <div className="grid md:grid-cols-2 gap-12 items-center mb-12">
+              <div className="flex justify-center">
+                <img 
+                  src="https://cdn.poehali.dev/files/ef7a1f65-c154-4029-9eaa-dccb642387be.png" 
+                  alt="Авитолог - эксперт по рекламе на Авито"
+                  className="rounded-2xl shadow-lg w-full max-w-md object-cover"
+                />
+              </div>
+              <div>
+                <h2 className="text-3xl md:text-4xl font-bold mb-6">Обо мне</h2>
+                <p className="text-lg text-muted-foreground mb-6">
+                  Я авитолог с 5-летним опытом работы. Специализируюсь на комплексном продвижении бизнеса на Авито: 
+                  от настройки рекламных кампаний до полного ведения аккаунта.
+                </p>
+                <p className="text-lg text-muted-foreground mb-6">
+                  Работаю с товарами, услугами и вакансиями. За это время помог более 200 компаниям увеличить поток клиентов 
+                  и оптимизировать рекламный бюджет.
+                </p>
+                <p className="text-lg text-muted-foreground">
+                  Мой подход — это анализ, тестирование и масштабирование того, что работает. Не просто "настроил и забыл", 
+                  а постоянная оптимизация для максимального результата.
+                </p>
+              </div>
+            </div>
+            <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
               <Card>
                 <CardHeader>
                   <Icon name="Package" className="mx-auto text-primary mb-2" size={40} />
